@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ski FiHigh</title>
+    <script src="https://kit.fontawesome.com/9f2da31b4a.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="Assets/Logo2.jpg" type="image/jpg" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        @font-face {
+            font-family: Roboto1;
+            src: url(./Assets/Fonts/Roboto/Roboto-Bold.ttf);
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        
+        a, h1, h2, h3, h4, p {
+            font-family: 'Roboto', sans-serif;
+        }
+        p {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+        }
+        body {
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #111;
+            position: relative;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 6%;
+            margin-top: -2%;
+            position: relative;
+            gap: -20%;
+            margin-left: -2%;
+        }
+
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4.5rem;
+        }
+
+        .nav-links li {
+            list-style: none;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            transition: .4s ease;
+            color: #fff;
+            font-size: 0.97rem;
+            font-family: Roboto1;
+        }
+
+        .nav-links li a:hover {
+            color: #EF3B36;
+        }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .front {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 5%;
+            min-height: calc(100vh - 100px);
+            flex-wrap: wrap;
+            margin-top: -5%;
+            margin-left: 1.5%;
+        }
+
+        .title {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .title h3 {
+            color: #EF3B36;
+            font-size: clamp(1rem, 3vw, 1rem);
+            margin-bottom: 1rem;
+            margin-top: -3rem;
+        }
+
+        .title h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .title p {
+            color: #fff;
+            font-weight: 400;
+            margin: 1rem 0 2rem 0;
+            font-size: clamp(1rem, 1vw, 1rem);
+        }
+
+        .title button,
+        footer button,
+        .qr,
+        .closePopUp {
+            padding: 12px 24px;
+            outline: none;
+            border: none;
+            background-color: #EF3B36;
+            border-radius: 6px;
+            font-weight: bold;
+            color: white;
+            transition: .4s ease;
+            cursor: pointer;
+            /* font-size: 1rem; */
+        }
+
+        .title button:hover,
+        footer button:hover,
+        .qr:hover,
+        .closePopUp:hover {
+            background-color: transparent;
+            outline: 1px solid #EF3B36;
+            color: #EF3B36;
+        }
+
+        .profileImg {
+            width: clamp(250px, 30vw, 4000px) !important;
+            height: clamp(250px, 30vw, 400px) !important;
+            background-color: #EF3B36;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 5px 5px 20px #f00;
+            margin-right: 2rem;
+            flex-shrink: 0;
+        }
+
+        .profileImg img {
+            width: 100%;
+            height: auto;
+        }
+
+        .socialLinks {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        i.fa-brands {
+            color: #EF3B36;
+            font-size: 2rem;
+        }
+
+        .popUp {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: .4s ease;
+            visibility: hidden;
+            background: #111;
+            padding: 2rem;
+            border-radius: 10px;
+            z-index: 1000;
+        }
+
+        .qrReviewopen {
+            transform: translate(-50%, -50%) scale(1);
+            visibility: visible;
+        }
+
+        .popUp img.qr {
+            width: 200px;
+            height: auto;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        /* Products Section */
+        .section1 {
+            width: 100%;
+            background-color: #111;
+            padding: 5rem 5%;
+        }
+
+        .section1 h3 {
+            text-align: center;
+            color: #fff;
+            font-size: clamp(1.5rem, 4vw, 1.5rem);
+            margin-bottom: 3rem;
+        }
+
+        .productGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .outer {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 1rem;
+            transition: .4s ease;
+            cursor: pointer;
+        }
+
+        .outer:hover {
+            background-color: #EF3B36;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(239, 59, 54, 0.3);
+        }
+
+        .image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: .4s ease;
+        }
+
+        .image img {
+            width: 80%;
+            height: auto;
+        }
+
+        .info p {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars i {
+            color: gold;
+            margin-right: 2px;
+        }
+
+        /* About Section */
+        .section2 {
+            width: 100%;
+            background-color: #111;
+            padding: 5rem 5%;
+            padding-bottom: 15%;
+        }
+
+        .section2 h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: clamp(2rem, 5vw, 1.5rem);
+        }
+
+        .writeup {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 8rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: clamp(1rem, 2vw, 1.0rem);
+        }
+
+        .contain {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            flex-wrap: wrap;
+        }
+
+        .year h1 {
+            font-size: clamp(4rem, 10vw, 8rem);
+            color: #EF3B36;
+            text-align: center;
+        }
+
+        .year h3 {
+            color: #fff;
+            text-align: center;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .info-grid div {
+            background-color: #1e1e1e;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 10px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-grid div:last-child {
+            display: none;
+        }
+
+        .info-grid div h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #EF3B36;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-grid div p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .why {
+            margin-bottom: 5rem !important;
+            font-size: 1.5rem;
+            margin-top: 10%;
+        }
+
+        .reasons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .reasons div {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 10px;
+            transition: .4s ease;
+        }
+
+        .reasons div:nth-child(2) {
+            background-color: #EF3B36;
+        }
+
+        .reasons div:hover {
+            transform: translateY(-5px);
+        }
+
+        .reasons div h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+        }
+
+        .reasons div p {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #191919;
+            width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .call {
+            background-color: #151515;
+            width: 100%;
+            max-width: 800px;
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            border-radius: 10px;
+            flex-wrap: wrap;
+            transform: translateY(-50%);
+        }
+
+        .call div:first-child {
+            flex: 1;
+        }
+
+        .call h1 {
+            color: #fff;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .call p {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            font-weight: 400;
+        }
+
+        .call div:last-child {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .call a {
+            text-decoration: none;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 100%;
+                background-color: #111;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: 0.3s;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+            }
+
+            .nav-links li a {
+                font-size: 1.5rem;
+            }
+
+            .front {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 5% 5rem 5%;
+            }
+
+            .profileImg {
+                margin: 2rem 0 0 0;
+                width: 250px;
+                height: 250px;
+            }
+
+            .socialLinks {
+                position: static;
+                justify-content: center;
+                margin-top: 2rem;
+            }
+
+            .popUp {
+                width: 90%;
+                max-width: 300px;
+            }
+
+            .productGrid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .contain {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .info-grid {
+                max-width: 300px;
+            }
+
+            .reasons {
+                grid-template-columns: 1fr;
+            }
+
+            .call {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .call div:last-child {
+                justify-content: center;
+            }
+            .section2 {
+                padding-bottom: 50%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem 3%;
+            }
+
+            .front {
+                padding: 1rem 3%;
+            }
+
+            .section1,
+            .section2 {
+                padding: 3rem 3%;
+            }
+
+            footer {
+                padding: 1rem 3%;
+            }
+
+            .productGrid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                max-width: 250px;
+            }
+
+            .reasons div {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .front {
+                padding: 4rem 5%;
+            }
+
+            .profileImg {
+                width: 450px;
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="Assets/Logo.png" alt="Logo Image">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="closeMenu()">Home</a></li>
+                <li><a href="#Products" onclick="closeMenu()">Products</a></li>
+                <li><a href="#About" onclick="closeMenu()">About</a></li>
+                <li><a href="#Contact" onclick="closeMenu()">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+        <div class="front">
+            <div class="title">
+                <h3>Freedom Crafted for the Bold</h3>
+                <h1>SKY FIHIGH</h1>
+                <p>
+                    Embrace a limitless mindset. Reach for the sky, <br>
+                    push boundaries and aim for greatness
+                </p>
+                <a href="#Contact">
+                    <button>Contact Me</button>
+                </a>
+            </div>
+
+            <div class="profileImg">
+                <img src="Assets/Profile pic.png" alt="Main Image">
+            </div>
+        </div>
+        
+        <div class="socialLinks">
+            <a href="https://www.instagram.com/skyflhigh?igsh=MTN1Z3FmczVsZnFlNg%3D%3D&utm_source=qr" target="_blank">
+                <i class="fa-brands fa-instagram fa-2xl"></i>
+            </a>
+            <button onclick="OpenPopUp()" class="qr">Scan QR code</button>
+        </div>
+        
+        <div id="popUp" class="popUp">
+            <img class="qr" src="Assets/Insta Qr.jpg" alt="QR Code">
+            <button onclick="ClosePopUp()" class="closePopUp">Close</button>
+        </div>
+    </header>
+
+    <section id="Products" class="section1">
+        <h3>Our Products</h3>
+        
+        <div class="productGrid">
+            <div class="outer">
+                <div class="image">
+                    <img src="Assets/T-shirt.png" alt="T-Shirt Image">
+                </div>
+                <div class="info">
+                    <p>Black T-Shirt</p>
+                </div>
+                <div class="stars">
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-regular fa-star fa-xs"></i>
+                </div>
+            </div>
+
+            <div class="outer">
+                <div class="image">
+                    <img src="Assets/T-shirt.png" alt="T-Shirt Image">
+                </div>
+                <div class="info">
+                    <p>Black T-Shirt</p>
+                </div>
+                <div class="stars">
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-regular fa-star fa-xs"></i>
+                </div>
+            </div>
+            
+            <div class="outer">
+                <div class="image">
+                    <img src="Assets/T-shirt.png" alt="T-Shirt Image">
+                </div>
+                <div class="info">
+                    <p>Black T-Shirt</p>
+                </div>
+                <div class="stars">
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-regular fa-star fa-xs"></i>
+                </div>
+            </div>
+            
+            <div class="outer">
+                <div class="image">
+                    <img src="Assets/T-shirt.png" alt="T-Shirt Image">
+                </div>
+                <div class="info">
+                    <p>Black T-Shirt</p>
+                </div>
+                <div class="stars">
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-regular fa-star fa-xs"></i>
+                </div>
+            </div>
+            
+            <div class="outer">
+                <div class="image">
+                    <img src="Assets/T-shirt.png" alt="T-Shirt Image">
+                </div>
+                <div class="info">
+                    <p>Black T-Shirt</p>
+                </div>
+                <div class="stars">
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-regular fa-star fa-xs"></i>
+                </div>
+            </div>
+            
+            <div class="outer">
+                <div class="image">
+                    <img src="Assets/T-shirt.png" alt="T-Shirt Image">
+                </div>
+                <div class="info">
+                    <p>Black T-Shirt</p>
+                </div>
+                <div class="stars">
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-regular fa-star fa-xs"></i>
+                </div>
+            </div>
+            
+            <div class="outer">
+                <div class="image">
+                    <img src="Assets/T-shirt.png" alt="T-Shirt Image">
+                </div>
+                <div class="info">
+                    <p>Black T-Shirt</p>
+                </div>
+                <div class="stars">
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-regular fa-star fa-xs"></i>
+                </div>
+            </div>
+            
+            <div class="outer">
+                <div class="image">
+                    <img src="Assets/T-shirt.png" alt="T-Shirt Image">
+                </div>
+                <div class="info">
+                    <p>Black T-Shirt</p>
+                </div>
+                <div class="stars">
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-solid fa-star fa-xs"></i>
+                    <i class="fa-regular fa-star fa-xs"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="About" class="section2">
+        <h1>About Us</h1>
+
+        <div class="writeup">
+            SF = freedom. Crafted for the Bold. If encourages people to be themselves.
+            The word "freedom" suggests liberation and authenticity, while "Crafted for the
+            Bold" implies that the brand is designed for those who are confident and unafraid to
+            express themselves. It's a call to embrace individuality and live life on your own
+            terms. This message runs deeper than fabric and threads. SF isn't just clothing —
+            it's a statement. Every piece is designed to reflect the spirit of those who
+            refuse to blend in. It's fashion for the fearless — for the ones who walk
+            their own path and wear their truth with pride.
+        </div>
+
+        <div class="contain">
+            <div class="year">
+                <h1>1</h1>
+                <h3>Year of Experience</h3>
+            </div>
+            <div class="info-grid">
+                <div>
+                    <p>Clients</p>
+                    <h1>10+</h1>
+                </div>
+                <div>
+                    <p>Since</p>
+                    <h1>2025</h1>
+                </div>
+                <div>
+                    <p>Rating</p>
+                    <h1>4.5</h1>
+                </div>
+                <div></div>
+            </div>
+        </div>
+
+        <h1 class="why">Why Us</h1>
+        <div class="reasons">
+            <div>
+                <h3>Unique Style That Stands Out</h3>
+                <p>
+                    Our designs aren't just clothes — they're statements. We blend modern fashion with bold originality, so you can express your identity in a way no one else can
+                </p>
+            </div>
+            <div>
+                <h3>Quality That Speaks for Itself</h3>
+                <p>
+                    We use premium materials and expert craftsmanship to ensure every piece feels as good as it looks — built to last, made to impress.
+                </p>
+            </div>
+            <div>
+                <h3>Purpose With Every Purchase</h3>
+                <p>
+                    We support causes that matter — from sustainable sourcing to community projects. Rocking our brand means being part of something bigger
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="Contact">
+        <div class="call">
+            <div>
+                <h1>Let's work together to improve your style</h1>
+                <p>If you dare to push the limits and reach new heights</p>
+            </div>
+            <div>
+                <a href="mailto:sffamily223@gmail.com?subject=Make Cloth Purchase"><button>Send a Mail</button></a>
+                <a href="#"><button>Whatsapp</button></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            navLinks.classList.toggle('active');
+            
+            // Animate hamburger menu
+            if (navLinks.classList.contains('active')) {
+                menuToggle.classList.add('active');
+            } else {
+                menuToggle.classList.remove('active');
+            }
+        }
+
+        function closeMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+        }
+
+        function OpenPopUp() {
+            const popUp = document.getElementById('popUp');
+            popUp.classList.add('qrReviewopen');
+        }
+
+        function ClosePopUp() {
+            const popUp = document.getElementById('popUp');
+            popUp.classList.remove('qrReviewopen');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
+        });
+
+        // Close popup when clicking outside
+        document.addEventListener('click', function(event) {
+            const popUp = document.getElementById('popUp');
+            const qrButton = document.querySelector('.qr');
+            
+            if (!popUp.contains(event.target) && !qrButton.contains(event.target)) {
+                popUp.classList.remove('qrReviewopen');
+            }
+        });
+    </script>
+</body>
+</html>
